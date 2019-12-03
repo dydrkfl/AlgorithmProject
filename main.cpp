@@ -5,6 +5,17 @@
 #include "Path.h"
 #include "RBtree.h"
 
+#ifndef CLS
+#define CLS     system("clear")
+#endif
+
+// implementation of each menu
+void make_reservation(void);    // ./reserve.cpp
+void print_timetable(void);     // ./timetable.cpp
+void cancel_reservation(void);  // ./cancel.cpp
+void check_reservation(void);   // ./check.cpp
+void print_rbtinfo(Tree T);     // ./rbtinfo.cpp
+
 int main(int argc, const char **argv)
 {
     (void)argc;
@@ -64,7 +75,7 @@ int main(int argc, const char **argv)
         printf("* Flight Reservation System  *\n");
         printf("*                            *\n");
         printf("* 1. Make reservation        *\n");
-        printf("* 2. Check time table        *\n");
+        printf("* 2. Print time table        *\n");
         printf("* 3. Cancel reservation      *\n");
         printf("* 4. Check reservation info  *\n");
         printf("* 5. Print RBT info          *\n");
@@ -75,14 +86,24 @@ int main(int argc, const char **argv)
 
         switch (select) {
             case 1:
+                CLS;
+                make_reservation();
                 break;
             case 2:
+                CLS;
+                print_timetable();
                 break;
             case 3:
+                CLS;
+                cancel_reservation();
                 break;
             case 4:
+                CLS;
+                check_reservation();
                 break;
             case 5:
+                CLS;
+                print_rbtinfo(T);
                 break;
             case 6:
                 return 0;
@@ -91,7 +112,7 @@ int main(int argc, const char **argv)
                 printf("Invalid input\n");
         }
 
-        printf("\n\n\n\n\n");
+        CLS;
     }
     return 0;
 }
