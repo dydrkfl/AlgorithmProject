@@ -16,6 +16,8 @@ void cancel_reservation(void);  // ./cancel.cpp
 void check_reservation(void);   // ./check.cpp
 void print_rbtinfo(Tree T);     // ./rbtinfo.cpp
 
+Tree T;
+
 int main(int argc, const char **argv)
 {
     (void)argc;
@@ -54,7 +56,6 @@ int main(int argc, const char **argv)
         }
     }
 
-    Tree T;
     for (int i = 0; i < 500; i++) {
         int date = rand() % 31;
         int src = rand() % 26;

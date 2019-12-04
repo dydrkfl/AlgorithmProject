@@ -30,23 +30,23 @@ void make_reservation(void)
     char dst = ' ';
 
     make_reservation_print_menu(name, date, src, dst);
-    printf("Input your name (Up to 9 characters): ");
+    printf("Enter your name (Up to 9 characters): ");
     fgets(name, 10, stdin);
     if (name[strlen(name) - 1] == '\n') name[strlen(name) - 1] = 0;
     CLS;
 
     make_reservation_print_menu(name, date, src, dst);
-    printf("Input dep. date (1 ~ 31): ");
+    printf("Enter departure date (1 ~ 31): ");
     scanf("%d", &date);
     CLS;
 
     make_reservation_print_menu(name, date, src, dst);
-    printf("Input source city (A ~ Z): ");
+    printf("Enter source city (A ~ Z): ");
     scanf("\n%c", &src);
     CLS;
 
     make_reservation_print_menu(name, date, src, dst);
-    printf("Input destination city (A ~ Z): ");
+    printf("Enter destination city (A ~ Z): ");
     scanf("\n%c", &dst);
     getchar();
     CLS;
