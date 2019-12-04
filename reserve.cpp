@@ -52,7 +52,7 @@ void make_reservation(void)
     CLS;
 
     make_reservation_print_menu(name, date, src, dst);
-    printf("Your reservation number is %d\n", 123);
+    printf("Your reservation id is %d\n", 123);
 
     return;
 }
