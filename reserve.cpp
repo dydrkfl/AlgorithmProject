@@ -54,6 +54,10 @@ void make_reservation(void)
     make_reservation_print_menu(name, date, src, dst);
     printf("Your reservation id is %d\n", 123);
 
+    Path newpath;
+    // initialize newpath
+    T.insert(name, newpath);
+
     return;
 }
 
