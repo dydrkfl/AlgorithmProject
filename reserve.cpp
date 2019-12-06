@@ -1,11 +1,15 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include "Path.h"
+#include "RBtree.h"
 
 #ifndef CLS
 //#define CLS     system("clear")
 #define CLS     printf("\n\n")
 #endif
+
+extern Tree T;
 
 void make_reservation_print_menu(char* name, int date, char src, char dst)
 {

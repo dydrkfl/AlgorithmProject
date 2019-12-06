@@ -48,6 +48,5 @@ void cancel_reservation()
 
 int main(void)
 {
-
     cancel_reservation();
 }
