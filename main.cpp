@@ -143,7 +143,7 @@ int main(int argc, const char **argv)
                 break;
             case 4:
                 CLS;
-                //check_reservation();
+                check_reservation();
                 break;
             case 5:
                 CLS;
@@ -155,6 +155,7 @@ int main(int argc, const char **argv)
             default:
                 printf("Invalid input\n");
         }
+        CLS;
     }
     return 0;
 }
