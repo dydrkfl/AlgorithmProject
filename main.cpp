@@ -7,7 +7,8 @@
 #include "Path_finder.h"
 
 #ifndef CLS
-#define CLS     system("clear")
+//#define CLS     system("clear")
+#define CLS     printf("\n\n")
 #endif
 
 // implementation of each menu
@@ -23,11 +24,12 @@ Tree T;
 /* default data structure, Path_finder* P */
 Path_finder* P;
 
+int map[26][26];  // to check if the path is already generated
+int timetable[31][26][26][2];   // [date][src][dst][0:hour 1:minute]
+
 int main(int argc, const char **argv)
 {
 
-    int timetable[31][26][26][2];   // [date][src][dst][0:hour 1:minute]
-    int map[26][26];  // to check if the path is already generated
 
 
     (void)argc;
@@ -133,7 +135,7 @@ int main(int argc, const char **argv)
                 break;
             case 2:
                 CLS;
-                //print_timetable();
+                print_timetable();
                 break;
             case 3:
                 CLS;

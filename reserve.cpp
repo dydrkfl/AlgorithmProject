@@ -58,10 +58,10 @@ void make_reservation(void)
     CLS;
 
     make_reservation_print_menu(name, date, src, dst);
-    printf("Your reservation id is %d\n", 123);
 
     Path* newpath = P->get_path(date, src - 'A', dst - 'A');
-    T.insert(name, newpath);
+    int r_id = T.insert(name, newpath);
+    printf("Your reservation id is %d\n", r_id);
 
     return;
 }
