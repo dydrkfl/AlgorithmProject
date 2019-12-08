@@ -10,7 +10,7 @@ class Path_finder{
 public:
 
 	int map[26][26];
-	int timetable[31][26][26][2];
+	int timetable[32][26][26][2];
 	int flight_path[100];
 	int dep_time[3];
 	int arr_time[3];
@@ -20,7 +20,7 @@ public:
 
 	Path_finder(int t[][26][26][2], int m[][26])
     {
-        for(int i = 0; i< 31; i++){
+        for(int i = 1; i<= 31; i++){
             for(int j = 0; j< 26; j++){
                 for(int k = 0; k< 26; k++){
                     timetable[i][j][k][0] = t[i][j][k][0];
@@ -47,7 +47,7 @@ public:
 	    p->source = src;
 	    p->dest = dst;
 	
-	    int path_ok = ShortestPath(map, src, dst,date);
+	    int path_ok = ShortestPath(map, src, dst, date);
 	    if(path_ok == 1){
 		    p->dep_time[0] = date;
 		    p->dep_time[1] = timetable[date][src][flight_path[1]][0];
@@ -136,7 +136,7 @@ public:
 		            // 4. 기존의 v노드까지의 최단거리 값보다 새로 계산되는 최단거리가 더 짧을 경우
 		            if(dist[u] != INT_MAX && graph[u][v]!=0){
 		                int date_1 =date + (int)(dist[u]/1440);
-		                if(date_1 > 30){
+		                if(date_1 > 31){
 		                	continue;
 		                }
 		                int dep = timetable[date_1][u][v][0]*60 + timetable[date_1][u][v][1];
@@ -145,7 +145,7 @@ public:
 		                    total = dep - (dist[u]%1440);
 		                }
 		                else{
-		                    if(date_1 == 30)
+		                    if(date_1 == 31)
 		                        continue;
 		                    else
 		                       {

@@ -26,7 +26,7 @@ Tree T;
 Path_finder* P;
 
 int map[26][26];  // to check if the path is already generated
-int timetable[31][26][26][2];   // [date][src][dst][0:hour 1:minute]
+int timetable[32][26][26][2];   // [date][src][dst][0:hour 1:minute]
 
 int main(int argc, const char **argv)
 {
@@ -66,7 +66,7 @@ int main(int argc, const char **argv)
     }
 	
 	/* randomly generate departure time table */
-    for (int date = 0; date < 31; date++) {
+    for (int date = 1; date <= 31; date++) {
         for (int src = 0; src < 26; src++) {
             for (int dst = 0; dst < 26; dst++) {
                 if (map[src][dst] != 0) {
@@ -87,7 +87,7 @@ int main(int argc, const char **argv)
     rand_name[4] = '\0';
 
     for (int i = 0; i < 500; i++) {
-        int date = rand() % 31;
+        int date = rand() % 31+1;
         int src = rand() % 26;
         int dst = rand() % 26;
 

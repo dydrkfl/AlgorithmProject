@@ -34,6 +34,7 @@ void check_reservation(void)
     } else {
         check_reservation_print_menu(customer->name, customer->path->dep_time[0], \
                 customer->path->source + 'A', customer->path->dest + 'A');
+
         printf("This is reservation info for given reservation id (%d)\n", r_id);
     }
 }
