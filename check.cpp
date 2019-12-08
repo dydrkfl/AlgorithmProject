@@ -1,12 +1,14 @@
 #include <cstdio>
+#include <cstring>
 #include "RBtree.h"
+#include "Path.h"
 
 extern Tree T;
 
-void cancel_reservation_print_menu(char* name, int date, char src, char dst)
+void check_reservation_print_menu(char* name, int date, char src, char dst)
 {
     printf("******************************\n");
-    printf("*     Cancel reservation     *\n");
+    printf("*     Check reservation      *\n");
     printf("*                            *\n");
     printf("* Name: %s", name);
     for (int i = 0; i < 21 - strlen(name); i++)
@@ -18,31 +20,20 @@ void cancel_reservation_print_menu(char* name, int date, char src, char dst)
     printf("******************************\n");
 }
 
-void cancel_reservation()
+void check_reservation(void)
 {
     int r_id;
-
     printf("Enter your reservation id: ");
     scanf("%d", &r_id);
     getchar();
-    printf("\n");
 
     Node* customer = T.search(T.root, r_id, NULL);
     if (customer->reserve_id != r_id) {
         printf("Cannot find reservation for given reservation id (%d)\n", r_id);
         return;
     } else {
-        cancel_reservation_print_menu(customer->name, customer->path->dep_time[0], \
+        check_reservation_print_menu(customer->name, customer->path->dep_time[0], \
                 customer->path->source + 'A', customer->path->dest + 'A');
-        char sel;
-        printf("Check your reservation info.\n");
-        printf("Cancel this reservation? (y/n) ");
-        scanf("%c", &sel);
-        getchar();
-
-        if (sel == 'y') {
-            T.remove(r_id);
-            printf("Successfully cancelled reservation (Reservation ID: %d)\n", r_id);
-        }
+        printf("This is reservation info for given reservation id (%d)\n", r_id);
     }
 }
