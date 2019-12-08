@@ -101,6 +101,7 @@ public:
 	int insert(char *name, Path *p){
 		Node* y = NIL;
 		Node* x = root;
+		// 넣을 위치를 탐색  
 		while(x != NIL){
 			y = x;
 			if(rid < x->reserve_id)
@@ -108,6 +109,9 @@ public:
 			else
 				x = x->right;
 		}
+		/* 새로운 node를 만들고 삽입
+		*  rid와 num_node를 증가 
+		*/ 
 		Node *temp = new Node(rid, name, p);
 		rid++;
 		num_node++;
@@ -134,8 +138,7 @@ public:
 		while(z->parent != NIL && z->parent->color == 1){ // red , red
 			if(z->parent == z->parent->parent->left){
 				y = z->parent->parent->right;
-				//if(y != NULL && y->color == 1){ // case 1
-				if(y->color == 1){
+				if(y->color == 1){ // case 1
 					z->parent->color = 0;
 					y->color = 0;
 					z->parent->parent->color = 1;
@@ -172,26 +175,33 @@ public:
 	
 	/* tree의 height를 찾기 위한 dfs */ 
 	void dfs(Node* n, int d){
+		/* NIL node 도착하면 마침 	*/ 
 		if(n == NIL)
 			return;
-		if(d > height)
+		if(d > height) // max height를 찾은거면 갱신 
 			height = d;
+		// 탐색 
 		dfs(n->left,d+1);
 		dfs(n->right,d+1);
 	}
 	
+	/* 찾고자 하는 값이 있으면 본인을 반환하고,
+	* 없는 경우에는 탐색과정에서 마지막으로 도달한 Node를 반환(NIL)
+	* search 의 return 된 p의 reserve_id 를 찾고자 하는 값과 비교하여
+	* 같으면 존재하는 것임을 인지. 
+	*/ 
 	Node* search(Node* n, int id, Node *p){
 		if(n != NIL){
-			if(n->reserve_id == id)
+			if(n->reserve_id == id) // 찾은 경우 
 				return n;
 			else{
-				if(id < n->reserve_id){
+				if(id < n->reserve_id){ // 찾고 있는 값이 작은 경우 
 					return search(n->left,id,n);
 				}else{
 					return search(n->right,id,n);
 				}
 			}
-		}else
+		}else // 존재하지 않으므로 NIL node return 
 			return p;
 	}
 		
@@ -214,7 +224,7 @@ public:
 	int remove(int val){
 		/* search -> true -> delete  */
 		Node *z = search(root,val,NIL);
-		if(z->reserve_id != val) // 없는 경우 
+		if(z->reserve_id != val) // 지우고자 하는 값이 없는 경우 
 			return 0;
 		
 		num_node--; 
@@ -228,7 +238,7 @@ public:
 		else
 			x = y->right;
 		x->parent = y->parent;
-		if(y->parent == NIL)
+		if(y->parent == NIL) // root인 경우 
 			root = x;
 		else{
 			if(y == y->parent->left)
@@ -241,6 +251,7 @@ public:
 		
 		if(y->color == 0)
 			deleteFixup(x);
+		delete(y->path);
 		delete(y);
 		
 		return 1;
@@ -302,6 +313,7 @@ public:
 		x->color = 0;
 	}	
 	
+	/* 메모리 초기화, LRV 형태로 진행 */ 
 	void freeBST(Node* temp){
 		if(temp == NIL)
 			return;
