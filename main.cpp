@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
@@ -29,8 +30,6 @@ int timetable[31][26][26][2];   // [date][src][dst][0:hour 1:minute]
 
 int main(int argc, const char **argv)
 {
-
-
 
     (void)argc;
     (void)argv;
@@ -101,14 +100,18 @@ int main(int argc, const char **argv)
         	for(int j = 1; j<4; j++)
         		rand_name[j] = rand() % 26 + 97;
         	
-            printf("%d %d %d\n", date, src, dst);
-            printf("i: %d\n", i);
+            printf("name: %s, date: %d, src: %c, dst: %c\n", rand_name, date, src+'A', dst+'A');
+            
             Path *newpath = P->get_path(date, src, dst);
-            /* flight_time == 0 -> there is no path between src and dst */
-            if(newpath->flight_time!=0)
-                T.insert(rand_name, newpath);
-            else
+            /* flight_time == 1 -> there is no path between src and dst */
+            if(newpath->flight_time!=-1){
+                int r_id = T.insert(rand_name, newpath);
+            	printf("reservation id: %d\n\n", r_id);
+			}else{
+				printf("fail\n\n");
             	delete(newpath);
+				i--;
+			}
         }
     }
 

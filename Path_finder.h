@@ -42,10 +42,10 @@ public:
 	    memset(shor_path,-1,sizeof(shor_path));
 	
 	    Path *p = new Path;
-	    p->flight_time = 0;
+		memset(p->flight_path,-1,sizeof(p->flight_path));
+	    p->flight_time = -1;
 	    p->source = src;
 	    p->dest = dst;
-	    printf("here");
 	
 	    int path_ok = ShortestPath(map, src, dst,date);
 	    if(path_ok == 1){
@@ -55,25 +55,26 @@ public:
 		    p->arr_time[0] = date + (int)dist[dst]/1440;
 		    p->arr_time[1] = (int)((dist[dst]%1440)/60);
 		    p->arr_time[2] = dist[dst]%60;
-		    printf("flight Path : ");
-		    for(int i =0; flight_path[i]!=-1; i++){
-		        p->flight_path[i] = flight_path[i];
-		        printf("%d->", p->flight_path[i]);
-		    }
+			p->flight_time = 0;
+			printf("flight Path : ");
+		    int j;
+			for(j =0; flight_path[j]!=-1; j++)
+		        p->flight_path[j] = flight_path[j];
+		   	for(int i = 0; i<j; i++){
+				printf("%c", p->flight_path[i]+'A');
+				if(i != j-1)
+					printf("->");
+			}
+			printf("\n");
 		    for(int i =1; flight_path[i]!=-1;i++){
 		        p->flight_time+=map[flight_path[i]][flight_path[i-1]];
 		    }
-		    printf("flight_time : %d",p->flight_time);
-		    printf("departure time: %d %d %d", p->dep_time[0],p->dep_time[1],p->dep_time[2]);
-		    printf("arrival time : %d %d %d", p->arr_time[0],p->arr_time[1],p->arr_time[2]);
-	    }
-	    else
-	    {
-	        printf("There is no path");
-	    }
-	
-	    printf("\n");
-	
+		    printf("flight_time : %d\n",p->flight_time);
+		    printf("departure time: %dd, %dh%dm\n", p->dep_time[0],p->dep_time[1],p->dep_time[2]);
+		    printf("arrival time : %dd, %dh%dm\n", p->arr_time[0],p->arr_time[1],p->arr_time[2]);
+	    }else{
+			printf("There is no path between %c and %c\n", src+'A', dst+'A');
+		}
 	    return p;
 	};
 
