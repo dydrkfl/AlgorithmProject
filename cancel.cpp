@@ -11,7 +11,7 @@ void cancel_reservation_print_menu(char* name, int date, char src, char dst)
     printf("* Name: %s", name);
     for (int i = 0; i < 21 - strlen(name); i++)
         printf(" ");
-    printf("\n");
+    printf("*\n");
     printf("* Dep. date: %2d              *\n", date);
     printf("* From: %c                    *\n", src);
     printf("* To: %c                      *\n", dst);
@@ -36,7 +36,7 @@ void cancel_reservation()
                 customer->path->source + 'A', customer->path->dest + 'A');
         char sel;
         printf("Check your reservation info.\n");
-        printf("Cancel this reservation? (y/n)");
+        printf("Cancel this reservation? (y/n) ");
         scanf("%c", &sel);
         getchar();
 
