@@ -1,3 +1,6 @@
+#ifndef PATH_H_INCLUDED
+#define PATH_H_INCLUDED
+
 typedef struct Path_info{
     int flight_time;
     int flight_path[100];
@@ -6,3 +9,5 @@ typedef struct Path_info{
     int source;
     int dest;
 }Path;
+
+#endif // PATH_H_INCLUDED
