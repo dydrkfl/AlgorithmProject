@@ -1,24 +1,15 @@
-#include <cstdio>
 #include <cstring>
 #include "Path.h"
 
-typedef struct SortArray{
-	int key;
-	int height;
-}SA;
-
-SA sortArray[64];
-int SAsize = 0;
-char str[24][255]; // maximum depth = 20+4 [base + insert ],  -> skewed linear array
-
-
+/* Node Class, */
 class Node{
-	/* ÀÌ¸§À» UI¿¡¼­ ¸¸µé¾î¼­ ÁÙÁö ¾Æ´Ï¸é ¿©±â¼­ initial ÇÒÁö */ 
 public:
+	/* reservation id, name, path information */
 	int reserve_id;
 	char name[32];
-	Path path;
+	Path *path;
 	
+	/* RBT information, pointer, color */
 	Node* parent;
 	Node* left;
 	Node* right;
@@ -32,7 +23,7 @@ public:
 		right = NULL;
 	}
 	
-	Node(int id, char *na, Path p){
+	Node(int id, char *na, Path *p){
 		reserve_id = id;
 		path = p;
 		strcpy(name, na);
@@ -61,12 +52,14 @@ public:
 		delete(NIL);
 	}
 	
+	/* get height of tree */
 	int getHeight(){
 		height = 0;
 		dfs(root,0);
 		return height;
 	}
 	
+	/* left Rotate */
 	void leftRotate(Node *x){
 		Node *y = x->right;
 		x->right = y->left;
@@ -85,6 +78,7 @@ public:
 		x->parent = y;
 	}
 	
+	/* right rotate */
 	void rightRotate(Node *x){
 		Node *y = x->left;
 		x->left = y->right;
@@ -103,7 +97,8 @@ public:
 		x->parent = y;
 	}
 
-	int insert(char *name, Path p){
+	/* insert */
+	int insert(char *name, Path *p){
 		Node* y = NIL;
 		Node* x = root;
 		while(x != NIL){
@@ -175,7 +170,7 @@ public:
 		root->color = 0; // make root black.
 	}
 	
-	
+	/* treeì˜ heightë¥¼ ì°¾ê¸° ìœ„í•œ dfs */ 
 	void dfs(Node* n, int d){
 		if(n == NIL)
 			return;
@@ -185,52 +180,15 @@ public:
 		dfs(n->right,d+1);
 	}
 	
-	void inorder(Node *n, int d){
-		if(n == NIL)
-			return;
-		inorder(n->left,d+1);
-		sortArray[SAsize].key = n->reserve_id;
-		sortArray[SAsize].height = d;
-		SAsize++;
-		inorder(n->right,d+1);
-	}
-	
-	void printBST(){
-		int i,j;
-		height = 0;
-		dfs(root,0);
-		for(i = 0; i<=height; i++){
-			sprintf(str[i]," %80s"," ");
-		}
-		SAsize = 0;
-		inorder(root, 0);
-		char b[10];
-		int h, key;
-		for(i = 0; i<SAsize; i++){
-			h = sortArray[i].height;
-			key = sortArray[i].key;
-			sprintf(b,"%02d",key);
-			for(j = 0; j<2; j++){
-				str[h][2*i+j] = b[j];
-			}
-		}
-		for(i = 0; i<=height; i++){
-			printf("level: %2d, %s\n",i,str[i]);
-		}
-	}
-	
-	/*  opt 1ÀÌ¸é Ã£´Â °úÁ¤ Ãâ·Â, 0ÀÌ¸é Ãâ·Âx   .  ±×³É Ãâ·ÂÇØ¼­ test¿ëÀÓ. */
-	Node* search(Node* n, int id, Node *p, int opt){
+	Node* search(Node* n, int id, Node *p){
 		if(n != NIL){
-			if(opt == 1)
-				printf("%d ",n->reserve_id);
 			if(n->reserve_id == id)
 				return n;
 			else{
 				if(id < n->reserve_id){
-					return search(n->left,id,n,opt);
+					return search(n->left,id,n);
 				}else{
-					return search(n->right,id,n,opt);
+					return search(n->right,id,n);
 				}
 			}
 		}else
@@ -252,11 +210,11 @@ public:
 		}
 		return y;
 	}
-		
+	/* successful remove -> return 1,  else return 0 */
 	int remove(int val){
 		/* search -> true -> delete  */
-		Node *z = search(root,val,NIL,0);
-		if(z->reserve_id != val) // ¾ø´Â °æ¿ì 
+		Node *z = search(root,val,NIL);
+		if(z->reserve_id != val) // ì—†ëŠ” ê²½ìš° 
 			return 0;
 		
 		num_node--; 
@@ -285,7 +243,7 @@ public:
 			deleteFixup(x);
 		delete(y);
 		
-		return 1; // boolean ½áµµ µÇ´ÂÁö ¸ð¸£°Ú¾î¼­ successful remove -> 1,    unsuccessful -> 0
+		return 1;
 	}
 
 	void deleteFixup(Node *x){
@@ -351,6 +309,7 @@ public:
 			freeBST(temp->left);
 		if(temp->right != NIL)
 			freeBST(temp->right);
+		delete(temp->path);
 		delete(temp);
 	}
 };
