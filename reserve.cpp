@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "Path.h"
 #include "RBtree.h"
+#include "Path_finder.h"
 
 #ifndef CLS
 //#define CLS     system("clear")
@@ -10,6 +11,7 @@
 #endif
 
 extern Tree T;
+extern Path_finder* P;
 
 void make_reservation_print_menu(char* name, int date, char src, char dst)
 {
@@ -58,14 +60,8 @@ void make_reservation(void)
     make_reservation_print_menu(name, date, src, dst);
     printf("Your reservation id is %d\n", 123);
 
-    Path newpath;
-    // initialize newpath
+    Path* newpath = P->get_path(date, src - 'A', dst - 'A');
     T.insert(name, newpath);
 
     return;
-}
-
-int main(void)
-{
-    make_reservation();
 }

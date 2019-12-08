@@ -15,10 +15,13 @@ void make_reservation(void);    // ./reserve.cpp
 void print_timetable(void);     // ./timetable.cpp
 void cancel_reservation(void);  // ./cancel.cpp
 void check_reservation(void);   // ./check.cpp
-void print_rbtinfo(Tree T);     // ./rbtinfo.cpp
+void print_rbtinfo(void);     // ./rbtinfo.cpp
 
-/* default data structre,  RBT T */
+/* default data structure,  RBT T */
 Tree T;
+
+/* default data structure, Path_finder* P */
+Path_finder* P;
 
 int main(int argc, const char **argv)
 {
@@ -77,7 +80,7 @@ int main(int argc, const char **argv)
     }
 	
 	/* path finder object p */
-    Path_finder *P = new Path_finder(timetable, map);
+    P = new Path_finder(timetable, map);
     
     char rand_name[5];
     rand_name[4] = '\0';
@@ -121,11 +124,12 @@ int main(int argc, const char **argv)
         printf("******************************\n");
         printf("> ");
         scanf("%d", &select);
+        getchar();
 
         switch (select) {
             case 1:
                 CLS;
-                //make_reservation();
+                make_reservation();
                 break;
             case 2:
                 CLS;
@@ -133,7 +137,7 @@ int main(int argc, const char **argv)
                 break;
             case 3:
                 CLS;
-                //cancel_reservation();
+                cancel_reservation();
                 break;
             case 4:
                 CLS;
@@ -141,7 +145,7 @@ int main(int argc, const char **argv)
                 break;
             case 5:
                 CLS;
-                //print_rbtinfo(T);
+                print_rbtinfo();
                 break;
             case 6:
                 return 0;
@@ -149,8 +153,6 @@ int main(int argc, const char **argv)
             default:
                 printf("Invalid input\n");
         }
-
-        CLS;
     }
     return 0;
 }

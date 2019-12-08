@@ -27,13 +27,14 @@ void cancel_reservation()
     getchar();
     printf("\n");
 
-    Node* customer = T.search(T, r_id, NULL, 0);
+    Node* customer = T.search(T.root, r_id, NULL);
     if (customer->reserve_id != r_id) {
         printf("Cannot find reservation for given reservation id (%d)\n", r_id);
         return;
     } else {
-        cancel_reservation_print_menu(customer->name, customer->path.dep_time[0], \
-                customer->path.source + 'A', customer->path.dest + 'A');
+        cancel_reservation_print_menu(customer->name, customer->path->dep_time[0], \
+                customer->path->source + 'A', customer->path->dest + 'A');
+        char sel;
         printf("Check your reservation info.\n");
         printf("Cancel this reservation? (y/n)");
         scanf("%c", &sel);
@@ -44,9 +45,4 @@ void cancel_reservation()
             printf("Successfully cancelled reservation (Reservation ID: %d)\n", r_id);
         }
     }
-}
-
-int main(void)
-{
-    cancel_reservation();
 }
